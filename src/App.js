@@ -6,11 +6,9 @@ import * as yup from 'yup';
 import getConfig from './service/apiConfig';
 
 const consoleData = data => {
-  console.log('clicou');
   console.log(data);
 };
 
-let regex
 const config = getConfig();
 console.log(config);
 const userNameMinimal = config.userNameMinimal;
@@ -20,8 +18,6 @@ const PasswordContainsNumber = config.passwordContainsNumber;
 const PasswordContainsLowerCase = config.passwordContainsLowerCase;
 const PasswordContainsUpperCase = config.passwordContainsUpperCase;
 const PasswordContainsSpecialSympol = config.passwordContainsSpecialSympol;
-
-regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/
 
 const schema = yup.object({
   Name: yup
@@ -46,10 +42,38 @@ const schema = yup.object({
       passwordMaxLength,
       `A senha deve ter no máximo ${passwordMaxLength} carcteres`,
     )
-    .matches(
-      regex,
-      `One Uppercase, One Lowercase, One Number and One Special Case Character`
-    ),
+    .test('upercase', 'A senha deve conter letra maiuscula', Password => {
+      if (PasswordContainsUpperCase === true) {
+        const uppercase = /(.*[A-Z].*)/;
+        return uppercase.test(Password);
+      } else {
+        return true;
+      }
+    })
+    .test('upercase', 'A senha deve conter números', Password => {
+      if (PasswordContainsNumber === true) {
+        const containsNumber = /(.*[0-9].*)/;
+        return containsNumber.test(Password);
+      } else {
+        return true;
+      }
+    })
+    .test('upercase', 'A senha deve conter simbolos', Password => {
+      if (PasswordContainsSpecialSympol === true) {
+        const ContainsSpecialSympol = /(.*[!@#$%^&*].*)/;
+        return ContainsSpecialSympol.test(Password);
+      } else {
+        return true;
+      }
+    })
+    .test('upercase', 'A senha deve conter letra minuscula', Password => {
+      if (PasswordContainsLowerCase === true) {
+        const containsLowerCase = /(.*[a-z].*)/;
+        return containsLowerCase.test(Password);
+      } else {
+        return true;
+      }
+    }),
   PasswordConfirm: yup
     .string()
     .oneOf([yup.ref('Password'), null], 'As senhas devem ser iguais'),
