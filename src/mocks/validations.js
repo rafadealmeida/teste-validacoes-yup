@@ -4,7 +4,7 @@ const configMock ={
    "userNameMinimal":"6",
    "passwordMinLength":"4",
    "passwordMaxLength":"12",
-   "passwordContainsNumber":false,
+   "passwordContainsNumber":true,
    "passwordContainsUpperCase":false,
    "passwordContainsLowerCase":true,
    "passwordContainsSpecialSympol":true,

@@ -60,7 +60,7 @@ const schema = yup.object({
     })
     .test('upercase', 'A senha deve conter simbolos', Password => {
       if (PasswordContainsSpecialSympol === true) {
-        const ContainsSpecialSympol = /(.*[!@#$%^&*].*)/;
+        const ContainsSpecialSympol = /(.*[!@#$%^&*^~;,'"_()].*)/;
         return ContainsSpecialSympol.test(Password);
       } else {
         return true;
