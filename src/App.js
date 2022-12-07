@@ -1,9 +1,11 @@
 import './App.css';
-import React, {useState, createContext} from 'react';
+import React, {useState, createContext, useCallback} from 'react';
 import FormDinamico from './FormDinamico';
 import FormToForm from './FormToForm';
+import {MentionsInput, Mention} from 'react-mentions';
 
 export const FieldContext = createContext();
+
 const fieldsText = [
   {
     label: 'Campo 1',
@@ -37,7 +39,6 @@ const fieldsText = [
   },
 ];
 
-
 const fields = [
   {
     label: 'Nome',
@@ -65,8 +66,32 @@ const fields = [
   },
 ];
 
+const usuarios = [
+  {
+    display: 'Rafael',
+    id: 'Rafael',
+  },
+
+  {
+    display: 'Sara',
+    id: 'Sara',
+  },
+
+  {
+    display: 'Miguel',
+    id: 'Miguel',
+  },
+
+  {
+    display: 'Irlani',
+    id: 'Irlani',
+  },
+];
+
 function App() {
   const [fieldsTextState, setFieldsTextState] = useState(fieldsText);
+  const [value, setValue] = useState('');
+
   return (
     <>
       {/* <Form />; */}
@@ -74,6 +99,13 @@ function App() {
         <FormToForm title="Formulario do formulario" fields={fieldsText} />
         <FormDinamico title="Dinâmico" fields={fields} />;
       </FieldContext.Provider>
+
+      <MentionsInput
+        value={value}
+        onChange={(e)=> setValue(e.target.value)}
+        placeholder={"Mention people using '@'"}>
+        <Mention trigger="@" data={usuarios}  displayTransform={login => `@${login}`} />
+      </MentionsInput>
     </>
   );
 }
